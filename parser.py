@@ -113,19 +113,25 @@ class TestParser(unittest.TestCase):
         seq = tp.Sequent
         a = tp.Atom
         m = tp.Monad
+        i = tp.Implication
+        t = tp.Tensor
+        ut = tp.universal_type
         s1 = 'atom |- a'
-        r1 = seq([a('atom', tp.universal_type)], a('a', tp.universal_type))
+        r1 = seq([a('atom', ut)], a('a', ut))
         s2 = '<>a |- a'
-        r2 = seq([m(a('a', tp.universal_type), '')], a('a', tp.universal_type))
+        r2 = seq([m(a('a', ut), '')], a('a', ut))
         s3 = '<c>a |- a'
-        r3 = seq([m(a('a', tp.universal_type), 'c')], a('a', tp.universal_type))
+        r3 = seq([m(a('a', ut), 'c')], a('a', ut))
         s4 = '|- a.a'
         r4 = seq([], a('a', 'a'))
         s5 = 'a : a |- b'
-        r5 = tp.DecoratedSequent([a('a', tp.universal_type)], a('b', tp.universal_type), [lc.Const('a')])
-
-        s = [s1, s2, s3, s4, s5]
-        r = [r1, r2, r3, r4, r5]
+        r5 = tp.DecoratedSequent([a('a', ut)], a('b', ut), [lc.Const('a')])
+        s6 = 'a -o b -o c |- d'
+        r6 = seq([i(a('a', ut), i(a('b', ut), a('c', ut)))], a('d', ut))
+        s7 = 'a * b * c |- d'
+        r7 = seq([t(t(a('a', ut), a('b', ut)), a('c', ut))], a('d', ut))
+        s = [s1, s2, s3, s4, s5, s6, s7]
+        r = [r1, r2, r3, r4, r5, r6, r7]
 
         for i in range(len(s)):
             self.assertEqual(parse(s[i]), r[i])

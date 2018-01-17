@@ -743,16 +743,18 @@ class ProofResults(object):
             aux_ren_vars(p, rename_map)
 
     def to_html(self, show_only_witness=True):
-        res = ''
+        # res = ''
         if show_only_witness:
             if not self.grouped:
                 self.group_proofs()
-            for p in self.witness_proofs:
-                res += str(p.to_html())
+            return '<br><br>'.join(str(p.to_html()) for p in self.witness_proofs)
+            # for p in self.witness_proofs:
+            #     res += str(p.to_html())
         else:
-            for p in self.proofs:
-                res += str(p.to_html())
-        return res
+            return '<br><br>'.join(str(p.to_html()) for p in self.proofs)
+            # for p in self.proofs:
+            #     res += str(p.to_html())
+        # return res
 
     def show(self, show_only_witness=False):
         if show_only_witness:

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Glue Theorem Prover</title>
     <style>
+        body{
+        font-family: 'Open sans', sans-serif;
+        }
         table{background-color: #ffffff;}
         em{font-weight:bold;}
         div{margin: 20px auto; width: 100%;}
@@ -20,6 +23,31 @@
         td {white-space: nowrap; text-align: center; vertical-align: bottom; padding-left: 5px; padding-right: 5px; font-family: \"Palatino Linotype\", \"Book Antiqua\", Palatino, serif; font-style: italic;}
         .title{ font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; color: #5E5E5E;font-size: 17px; background-color: #FFFFFF; letter-spacing: 5.8pt;word-spacing: 3pt; line-height: 1.2; padding: 21px;}
         .verbatim{font-family:\"Lucida Console\", Monaco, monospace}
+        code{
+        color:#0066cc;
+        font-weight: bold;
+        }
+        h1{font-weight: 300; font-size: 38px; margin: 0px 0px 0px 0px; line-height: 120%; }
+        h2{font-weight: 300; font-size: 30px; margin: 10px 0px 10px 0px; line-height: 120%; }
+
+        input[type=submit] {
+        padding:5px 15px;
+        border:0 none;
+        border-radius: 5px;
+        font-size:16px;
+    }
+        input[type=text] {padding:5px;
+        border:2px solid #ccc;
+font-size:16px;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
     </style>
 
 </head>
@@ -27,16 +55,56 @@
 <h1>Glue theorem prover</h1>
 <div>
     <form class="pure-form" action="/" method="post">
-Sequent <input  type="text" name="sequent" size="60" placeholder="See below for accepted syntax">
-<input type="submit" class="pure-button" value="Prove">
-</form>
-    <h3>Instructions</h3>
-    <p>Write them!</p>
+        <input type="text" name="sequent" size="60" placeholder="Enter a sequent - see below for accepted syntax">
+        <input type="submit" class="pure-button" value="Prove">
+    </form>
+    <br>
+    <h2>Instructions</h2>
+    <p>The general shape of a sequent is as follows: <code>HYPOTHESES |- FORMULA</code>, where <code>HYPOTHESES</code>
+        is a (possibly empty) comma-separated list of <code>FORMULA</code>s.
+        A <code>FORMULA</code> is either:
+    <ul>
+        <li>A constant, i.e. an alphanumeric string starting with a lower case character, e.g. <code>j</code>, <code>fzhd34</code>.
+            A constant can be typed by following it with a dot <code>.</code> then by a type identifier (again an
+            alphanumeric string starting with a lower case character), e.g. <code>j.e</code>, <code>c123.t34</code>. If
+            no type is specified a universal type is automatically associated with the constant (this type is considered
+            equal to all other types!).
+        </li>
+        <li>A variable, i.e. an alphanumeric string starting with an upper case character, e.g. <code>X</code>, <code>Var15854</code>.
+            Variables can be typed in exactly the same way as constants.
+        </li>
+        <li>An implication, i.e. <code>FORMULA -o FORMULA</code>, e.g. <code>a -o b</code>, <code>j.e -o m.e -o
+            l.t</code>. Implications are automatically typed so you don't have
+            (and you can't) type them. Notice that, as expected, implication is right associative, meaning that <code>a
+                -o b -o c</code> is equivalent to <code>a -o (b -o c)</code></li>
+        <li>A tensor produce, i.e <code>FORMULA * FORMULA</code>. Also tensors are automatically typed. <code>*</code>
+            is left associative (no real reason for it).
+        </li>
+        <li>A monadic resource, i.e. <code>&lt;TYPE&gt;FORMULA</code>, where <code>TYPE</code> is a (possibly empty)
+            alphanumeric string starting with a lower case character. For example these are monadic resources: <code>
+                &lt;&gt;a</code>, <code>&lt;ci&gt;m.e</code>, <code>&gt;&lt;(a*b)</code>. Monadic formulae are
+            automatically typed.
+        </li>
+    </ul>
+    Noticed that in the last example we used parentheses to indicate that the monadic operator should scope over the
+    tensor, this is because the monadic operator binds more than the tensor which in turns binds more than implication
+    operator. Parentheses can be used with profusion to avoid confusion.
+    </p>
+    <p>The formulae in the <code>HYPOTHESES</code> part of the sequents can be associated with lambda terms, constants
+        (or you can consider them variables but they are never bound). To do so you prefix each formula with a term (an
+        alphanumeric string starting with a lower case character) followed by a colon <code>:</code>, e.g. <code>john :
+            j, love : j -o m -o l, mary : m |- l</code>. Notice that the right hand side has no term, it's the job of
+        the prover to construct it!</p>
+    <p>White spaces are irrelevant, you are free to obscurely write <code>a-ob-oc,a,b|-c</code>.</p>
+    <p>There is a built-in timeout of two minutes, meaning that if the prover hasn't exhausted the search for proofs in
+        two minutes you are not going to get any answer. This is to avoid having searches that hog up all the resources
+        of the server.</p>
 </div>
 <hr class="sep">
 <div>
-    <h3>Proofs:</h3>
-        {{ proofs|safe }}
+    <h2>Proofs:</h2>
+    {{ proofs|safe }}
+    {{ error }}
 </div>
 </body>
 </html>

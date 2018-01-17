@@ -17,12 +17,12 @@ hypotheses: (first=formula)? (',' rest+=formula)* ;
 
 consequence: form=formula ;
 
-formula: '<' monadtype=ATOM? '>' body=formula    # MonadFormula
-       | left=formula '*' right=formula          # TensorFormula
-       | left=formula '-o' right=formula         # ImplicationFormula
-       | body=ATOM ('.' c_type=ATOM)?            # AtomFormula
-       | body=VARIABLE ('.' v_type=ATOM)?        # VariableFormula
-       | '(' body=formula ')'                    # ParensFormula
+formula: '<' monadtype=ATOM? '>' body=formula         # MonadFormula
+       | left=formula '*' right=formula               # TensorFormula
+       |<assoc=right> left=formula '-o' right=formula # ImplicationFormula
+       | body=ATOM ('.' c_type=ATOM)?                 # AtomFormula
+       | body=VARIABLE ('.' v_type=ATOM)?             # VariableFormula
+       | '(' body=formula ')'                         # ParensFormula
        ;
 
 

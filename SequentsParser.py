@@ -31,7 +31,7 @@ def serializedATN():
         buf.write("\2\2\29:\3\2\2\2:@\3\2\2\2;<\7\n\2\2<=\5\n\6\2=>\7\13")
         buf.write("\2\2>@\3\2\2\2?*\3\2\2\2?\61\3\2\2\2?\66\3\2\2\2?;\3\2")
         buf.write("\2\2@I\3\2\2\2AB\f\7\2\2BC\7\7\2\2CH\5\n\6\bDE\f\6\2\2")
-        buf.write("EF\7\b\2\2FH\5\n\6\7GA\3\2\2\2GD\3\2\2\2HK\3\2\2\2IG\3")
+        buf.write("EF\7\b\2\2FH\5\n\6\6GA\3\2\2\2GD\3\2\2\2HK\3\2\2\2IG\3")
         buf.write("\2\2\2IJ\3\2\2\2J\13\3\2\2\2KI\3\2\2\2LM\5\16\b\2MN\7")
         buf.write("\3\2\2NO\5\b\5\2O\r\3\2\2\2PR\5\20\t\2QP\3\2\2\2QR\3\2")
         buf.write("\2\2RW\3\2\2\2ST\7\4\2\2TV\5\20\t\2US\3\2\2\2VY\3\2\2")
@@ -684,7 +684,7 @@ class SequentsParser ( Parser ):
                         self.state = 67
                         self.match(SequentsParser.T__5)
                         self.state = 68
-                        localctx.right = self.formula(5)
+                        localctx.right = self.formula(4)
                         pass
 
              
