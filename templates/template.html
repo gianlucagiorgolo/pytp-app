@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glue Theorem Prover</title>
+    <style>
+        table{background-color: #ffffff;}
+        em{font-weight:bold;}
+        div{margin: 20px auto; width: 100%;}
+        hr{
+        border-style:solid;
+        border-color:#909090;
+        border-width:1px 0 0 0;
+        }
+        hr.sep {
+          border-style: solid;
+          border-color: #8c8b8b;
+          border-width: 1px 0 0 0;
+        }
+        td {white-space: nowrap; text-align: center; vertical-align: bottom; padding-left: 5px; padding-right: 5px; font-family: \"Palatino Linotype\", \"Book Antiqua\", Palatino, serif; font-style: italic;}
+        .title{ font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; color: #5E5E5E;font-size: 17px; background-color: #FFFFFF; letter-spacing: 5.8pt;word-spacing: 3pt; line-height: 1.2; padding: 21px;}
+        .verbatim{font-family:\"Lucida Console\", Monaco, monospace}
+    </style>
+
+</head>
+<body>
+<h1>Glue theorem prover</h1>
+<div>
+    <form class="pure-form" action="/" method="post">
+Sequent <input  type="text" name="sequent" size="60" placeholder="See below for accepted syntax">
+<input type="submit" class="pure-button" value="Prove">
+</form>
+    <h3>Instructions</h3>
+    <p>Write them!</p>
+</div>
+<hr class="sep">
+<div>
+    <h3>Proofs:</h3>
+        {{ proofs|safe }}
+</div>
+</body>
+</html>
